@@ -62,22 +62,22 @@ export const HeaderNav = props => {
                   {navCollapsed || isMobile ? <MenuUnfoldOutlined className="nav-icon" /> : <MenuFoldOutlined className="nav-icon" />}
                 </Menu.Item>
               }
-              {
-                isMobile ?
-                <Menu.Item key="1" onClick={() => {onSearchActive()}}>
-                  <SearchOutlined />
-                </Menu.Item>
-                :
-                <Menu.Item key="1" style={{cursor: 'auto'}}>
-                  <SearchInput mode={mode} isMobile={isMobile} />
-                </Menu.Item>
-              }
+              {/*{*/}
+              {/*  isMobile ?*/}
+              {/*  <Menu.Item key="1" onClick={() => {onSearchActive()}}>*/}
+              {/*    <SearchOutlined />*/}
+              {/*  </Menu.Item>*/}
+              {/*  :*/}
+              {/*  <Menu.Item key="1" style={{cursor: 'auto'}}>*/}
+              {/*    <SearchInput mode={mode} isMobile={isMobile} />*/}
+              {/*  </Menu.Item>*/}
+              {/*}*/}
             </Menu>
           </div>
           <div className="nav-right">
-            <NavNotification />
-            <NavLanguage />
-            <NavProfile />
+            {/*<NavNotification />*/}
+            {/*<NavLanguage />*/}
+            {/*<NavProfile />*/}
             <NavPanel />
           </div>
           <NavSearch active={searchActive} close={onSearchClose}/>

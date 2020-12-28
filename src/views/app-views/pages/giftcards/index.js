@@ -2,6 +2,10 @@ import * as React from 'react'
 import {Card, Row, Col, Modal, Switch, Input, Button} from 'antd'
 import {EditOutlined} from "@ant-design/icons";
 
+/**
+ * you can add other props that will be needed to make this work well
+ * depending on what you have from the api
+ **/
 const Giftcard = ({slug, name, title, imageSource}) => {
   const [visible, setVisible] = React.useState(false)
   const [enableBuying, setEnableBuying] = React.useState(false)
