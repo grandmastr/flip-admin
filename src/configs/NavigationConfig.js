@@ -41,7 +41,7 @@ const extraNavTree = [
       },
       {
         key: 'extra-giftcards-request',
-        path: `${APP_PREFIX_PATH}/pages/giftcards/details`,
+        path: `${APP_PREFIX_PATH}/pages/giftcards/requests`,
         title: 'Buy requests',
         icon: PullRequestOutlined,
         breadcrumb: false,
