@@ -52,15 +52,16 @@ const Giftcard = ({slug, name, title, imageSource}) => {
 
 const GiftCards = () => {
   return <>
-    <Row gutter={[40, 40]}>
-      <Col span={6}>
+    <Row gutter={16}>
+      <Col span={8}>
         <Giftcard imageSource={'https://swifttradesng.netlify.app/static/media/hulu.f5335b13.webp'}
                   title={'Hulu card'}/>
       </Col>
-      <Col span={6}>
+      <Col span={8}>
         <Giftcard title={'Steam card'}/>
+
       </Col>
-      <Col span={6}>
+      <Col span={8}>
         <Giftcard imageSource={'https://swifttradesng.netlify.app/static/media/itunes.b485b84e.webp'}
                   title={'iTunes card'}/>
       </Col>

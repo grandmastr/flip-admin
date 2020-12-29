@@ -12,9 +12,11 @@ const Pages = ({match}) => (
       <Route path={`${match.url}/faq`} component={lazy(() => import(`views/app-views/pages/faq`))}/>
       <Route path={`${match.url}/setting`} component={lazy(() => import(`views/app-views/pages/setting`))}/>
       <Route path={`${match.url}/user-list`} component={lazy(() => import(`views/app-views/pages/user-list`))}/>
-      <Route path={`${match.url}/transaction-list`} component={lazy(() => import(`views/app-views/pages/transactions`))}/>
-      <Route path={`${match.url}/giftcards/requests`}
+      <Route path={`${match.url}/transaction-list`}
+             component={lazy(() => import(`views/app-views/pages/transactions`))}/>
+      <Route path={`${match.url}/giftcards/edit`}
              component={lazy(() => import(`views/app-views/pages/giftcards`))}/>
+      <Route path={`${match.url}/bitcoin/details`} component={lazy(() => import(`views/app-views/pages/bitcoin`))}/>
     </Switch>
   </Suspense>
 );

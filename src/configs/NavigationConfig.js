@@ -1,30 +1,9 @@
 import {
   DashboardOutlined,
-  AppstoreOutlined,
-  FileTextOutlined,
-  PieChartOutlined,
-  EnvironmentOutlined,
-  AntDesignOutlined,
-  SafetyOutlined,
-  StopOutlined,
-  DotChartOutlined,
-  MailOutlined,
-  MessageOutlined,
-  CalendarOutlined,
-  BulbOutlined,
-  InfoCircleOutlined,
-  CompassOutlined,
-  LayoutOutlined,
-  DesktopOutlined,
-  FileDoneOutlined,
-  CommentOutlined,
-  RobotOutlined,
-  PlusCircleOutlined,
-  FundOutlined,
-  ShoppingCartOutlined,
-  BookOutlined,
-  FileUnknownOutlined,
-  ProfileOutlined,
+  LineChartOutlined,
+  GiftOutlined,
+  PullRequestOutlined,
+  DollarCircleOutlined,
 } from '@ant-design/icons';
 import {APP_PREFIX_PATH, AUTH_PREFIX_PATH} from 'configs/AppConfig'
 
@@ -41,7 +20,7 @@ const extraNavTree = [
     key: 'extra-transactions',
     path: `${APP_PREFIX_PATH}/pages/transaction-list`,
     title: 'Transactions',
-    icon: DashboardOutlined,
+    icon: LineChartOutlined,
     breadcrumb: false,
     submenu: []
   },
@@ -49,25 +28,42 @@ const extraNavTree = [
     key: 'extra-giftcards',
     path: `${APP_PREFIX_PATH}/pages/giftcards`,
     title: 'Giftcards',
-    icon: DashboardOutlined,
+    icon: '',
     breadcrumb: false,
     submenu: [
       {
         key: 'extra-giftcards-details',
-        path: `${APP_PREFIX_PATH}/pages/giftcards/requests`,
+        path: `${APP_PREFIX_PATH}/pages/giftcards/edit`,
         title: 'Details',
-        icon: DashboardOutlined,
+        icon: GiftOutlined,
         breadcrumb: false,
         submenu: []
       },
       {
         key: 'extra-giftcards-request',
-        path: `${APP_PREFIX_PATH}/pages/giftcards/requests`,
+        path: `${APP_PREFIX_PATH}/pages/giftcards/details`,
         title: 'Buy requests',
-        icon: DashboardOutlined,
+        icon: PullRequestOutlined,
         breadcrumb: false,
         submenu: []
       }
+    ]
+  },
+  {
+    key: 'extra-bitcoin',
+    path: `${APP_PREFIX_PATH}/pages/giftcards`,
+    title: 'Bitcoin',
+    icon: '',
+    breadcrumb: false,
+    submenu: [
+      {
+        key: 'extra-bitcoin-details',
+        path: `${APP_PREFIX_PATH}/pages/bitcoin/details`,
+        title: 'Details',
+        icon: DollarCircleOutlined,
+        breadcrumb: false,
+        submenu: []
+      },
     ]
   }
 ]

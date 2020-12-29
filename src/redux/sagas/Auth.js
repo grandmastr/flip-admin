@@ -1,15 +1,15 @@
-import { all, takeEvery, put, fork, call } from 'redux-saga/effects';
+import {all, takeEvery, put, fork, call} from 'redux-saga/effects';
 import {
-	AUTH_TOKEN,
-	SIGNIN,
-	SIGNOUT,
-	SIGNUP,
+  AUTH_TOKEN,
+  SIGNIN,
+  SIGNOUT,
+  SIGNUP,
 } from '../constants/Auth';
 import {
-	showAuthMessage,
-	authenticated,
-	signOutSuccess,
-	signUpSuccess,
+  showAuthMessage,
+  authenticated,
+  signOutSuccess,
+  signUpSuccess,
 } from "../actions/Auth";
 
 import FirebaseService from 'services/FirebaseService'
@@ -34,51 +34,49 @@ import AuthService from "services/JwtAuthService";
 
 
 export function* logIn() {
-	yield takeEvery(SIGNIN, function* ({ payload }) {
-		const { email, password } = payload;
+  yield takeEvery(SIGNIN, function* ({payload}) {
+    const {email, password} = payload;
 
-		try {
-			const data = yield call(AuthService.login, { email, password });
-			console.log("Data from logIn saga:", data);
-			localStorage.setItem(AUTH_TOKEN, data.data.token);
-			yield put(authenticated(data.data));
-		}
-		catch (error) {
-			yield put(showAuthMessage(error.response.data.message));
-		}
-	});
+    try {
+      const data = yield call(AuthService.login, {email, password});
+
+      localStorage.setItem(AUTH_TOKEN, data.data.token);
+      yield put(authenticated(data.data));
+    } catch (error) {
+      yield put(showAuthMessage(error.response.data.message));
+    }
+  });
 }
 
 export function* signUp() {
-	yield takeEvery(SIGNUP, function* ({ payload }) {
-		const { email, firstName, lastName, password } = payload;
+  yield takeEvery(SIGNUP, function* ({payload}) {
+    const {email, firstName, lastName, password} = payload;
 
-		try {
-			const data = yield call(AuthService.signUp, { email, firstName, lastName, password });
-			console.log("Data from signUp saga:", data);
-			localStorage.setItem(AUTH_TOKEN, data.data.token);
-			yield put(signUpSuccess(data.data));
-		}
-		catch (error) {
-			yield put(showAuthMessage(error.response ? error.response.data.message : error));
-		}
-	});
+    try {
+      const data = yield call(AuthService.signUp, {email, firstName, lastName, password});
+
+      localStorage.setItem(AUTH_TOKEN, data.data.token);
+      yield put(signUpSuccess(data.data));
+    } catch (error) {
+      yield put(showAuthMessage(error.response ? error.response.data.message : error));
+    }
+  });
 }
 
 export function* signOut() {
   yield takeEvery(SIGNOUT, function* () {
-		try {
-			const signOutUser = yield call(FirebaseService.signOutRequest);
-			if (signOutUser === undefined) {
-				localStorage.removeItem(AUTH_TOKEN);
-				yield put(signOutSuccess(signOutUser));
-			} else {
-				yield put(showAuthMessage(signOutUser.message));
-			}
-		} catch (err) {
-			yield put(showAuthMessage(err));
-		}
-	});
+    try {
+      const signOutUser = yield call(FirebaseService.signOutRequest);
+      if (signOutUser === undefined) {
+        localStorage.removeItem(AUTH_TOKEN);
+        yield put(signOutSuccess(signOutUser));
+      } else {
+        yield put(showAuthMessage(signOutUser.message));
+      }
+    } catch (err) {
+      yield put(showAuthMessage(err));
+    }
+  });
 }
 
 // export function* signUpWithFBEmail() {
@@ -101,10 +99,10 @@ export function* signOut() {
 
 export default function* rootSaga() {
   yield all([
-		// fork(signInWithFBEmail),
-		fork(logIn),
-		fork(signUp),
-		fork(signOut),
-		// fork(signUpWithFBEmail),
+    // fork(signInWithFBEmail),
+    fork(logIn),
+    fork(signUp),
+    fork(signOut),
+    // fork(signUpWithFBEmail),
   ]);
 }
