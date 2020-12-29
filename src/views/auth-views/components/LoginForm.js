@@ -97,7 +97,7 @@ export const LoginForm = props => {
 							message: 'Please enter a validate email!'
 						}
 					]}>
-					<Input prefix={<MailOutlined className="text-primary" />}/>
+					<Input autoComplete="email" prefix={<MailOutlined className="text-primary" />}/>
 				</Form.Item>
 				<Form.Item
 					name="password"
@@ -122,7 +122,7 @@ export const LoginForm = props => {
 						}
 					]}
 				>
-					<Input.Password prefix={<LockOutlined className="text-primary" />}/>
+					<Input.Password autoComplete="current-password" prefix={<LockOutlined className="text-primary" />}/>
 				</Form.Item>
 				<Form.Item>
 					<Button type="primary" htmlType="submit" block loading={loading}>

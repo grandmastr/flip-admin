@@ -25,7 +25,8 @@ const auth = (state = initState, action) => {
 				...state,
 				loading: false,
 				redirect: '/',
-				token: action.token
+				token: action.token,
+				user: action.user
 			}
 		case SHOW_AUTH_MESSAGE: 
 			return {
@@ -52,7 +53,9 @@ const auth = (state = initState, action) => {
 			return {
 			  ...state,
 			  loading: false,
-			  token: action.token
+				redirect: '/',
+			  token: action.token,
+				user: action.user
 			}
 		}
 		case SHOW_LOADING: {

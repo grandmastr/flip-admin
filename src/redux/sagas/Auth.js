@@ -13,20 +13,54 @@ import {
 } from "../actions/Auth";
 
 import FirebaseService from 'services/FirebaseService'
+import AuthService from "services/JwtAuthService";
 
-export function* signInWithFBEmail() {
-  yield takeEvery(SIGNIN, function* ({payload}) {
-		const {email, password} = payload;
+// export function* signInWithFBEmail() {
+//   yield takeEvery(SIGNIN, function* ({payload}) {
+// 		const {email, password} = payload;
+// 		try {
+// 			const user = yield call(FirebaseService.signInEmailRequest, email, password);
+// 			if (user.message) {
+// 				yield put(showAuthMessage(user.message));
+// 			} else {
+// 				localStorage.setItem(AUTH_TOKEN, user.user.uid);
+// 				yield put(authenticated(user.user.uid));
+// 			}
+// 		} catch (err) {
+// 			yield put(showAuthMessage(err));
+// 		}
+// 	});
+// }
+
+
+export function* logIn() {
+	yield takeEvery(SIGNIN, function* ({ payload }) {
+		const { email, password } = payload;
+
 		try {
-			const user = yield call(FirebaseService.signInEmailRequest, email, password);
-			if (user.message) {
-				yield put(showAuthMessage(user.message));
-			} else {
-				localStorage.setItem(AUTH_TOKEN, user.user.uid);
-				yield put(authenticated(user.user.uid));
-			}
-		} catch (err) {
-			yield put(showAuthMessage(err));
+			const data = yield call(AuthService.login, { email, password });
+			console.log("Data from logIn saga:", data);
+			localStorage.setItem(AUTH_TOKEN, data.data.token);
+			yield put(authenticated(data.data));
+		}
+		catch (error) {
+			yield put(showAuthMessage(error.response.data.message));
+		}
+	});
+}
+
+export function* signUp() {
+	yield takeEvery(SIGNUP, function* ({ payload }) {
+		const { email, firstName, lastName, password } = payload;
+
+		try {
+			const data = yield call(AuthService.signUp, { email, firstName, lastName, password });
+			console.log("Data from signUp saga:", data);
+			localStorage.setItem(AUTH_TOKEN, data.data.token);
+			yield put(signUpSuccess(data.data));
+		}
+		catch (error) {
+			yield put(showAuthMessage(error.response ? error.response.data.message : error));
 		}
 	});
 }
@@ -47,28 +81,30 @@ export function* signOut() {
 	});
 }
 
-export function* signUpWithFBEmail() {
-  yield takeEvery(SIGNUP, function* ({payload}) {
-		const {email, password} = payload;
-		try {
-			const user = yield call(FirebaseService.signUpEmailRequest, email, password);
-			if (user.message) {
-				yield put(showAuthMessage(user.message));
-			} else {
-				localStorage.setItem(AUTH_TOKEN, user.user.uid);
-				yield put(signUpSuccess(user.user.uid));
-			}
-		} catch (error) {
-			yield put(showAuthMessage(error));
-		}
-	}
-	);
-}
+// export function* signUpWithFBEmail() {
+//   yield takeEvery(SIGNUP, function* ({payload}) {
+// 		const {email, password} = payload;
+// 		try {
+// 			const user = yield call(FirebaseService.signUpEmailRequest, email, password);
+// 			if (user.message) {
+// 				yield put(showAuthMessage(user.message));
+// 			} else {
+// 				localStorage.setItem(AUTH_TOKEN, user.user.uid);
+// 				yield put(signUpSuccess(user.user.uid));
+// 			}
+// 		} catch (error) {
+// 			yield put(showAuthMessage(error));
+// 		}
+// 	}
+// 	);
+// }
 
 export default function* rootSaga() {
   yield all([
-		fork(signInWithFBEmail),
+		// fork(signInWithFBEmail),
+		fork(logIn),
+		fork(signUp),
 		fork(signOut),
-		fork(signUpWithFBEmail),
+		// fork(signUpWithFBEmail),
   ]);
 }

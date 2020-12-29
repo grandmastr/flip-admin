@@ -40,9 +40,24 @@ export const Views = (props) => {
           <Route exact path="/">
             <Redirect to={APP_PREFIX_PATH} />
           </Route>
-          <Route path={AUTH_PREFIX_PATH}>
+          <Route
+            path={AUTH_PREFIX_PATH}
+            render={({ location }) =>
+              !token ? (
+                <AuthLayout />
+              ) : (
+                <Redirect
+                  to={{
+                    pathname: APP_PREFIX_PATH,
+                    state: { from: location }
+                  }}
+                />
+              )
+            }
+          />
+          {/* <Route path={AUTH_PREFIX_PATH}>
             <AuthLayout />
-          </Route>
+          </Route> */}
           <RouteInterceptor path={APP_PREFIX_PATH} isAuthenticated={token}>
             <AppLayout location={location}/>
           </RouteInterceptor>

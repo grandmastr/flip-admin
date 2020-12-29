@@ -11,11 +11,12 @@ const service = axios.create({
 
 // Config
 const ENTRY_ROUTE = '/auth/login'
-const TOKEN_PAYLOAD_KEY = 'authorization'
+const TOKEN_PAYLOAD_KEY = 'x-auth-token'
 const PUBLIC_REQUEST_KEY = 'public-request'
 
 // API Request interceptor
 service.interceptors.request.use(config => {
+	console.log("Request to send:", config);
 	const jwtToken = localStorage.getItem(AUTH_TOKEN)
 	
   if (jwtToken) {
@@ -27,6 +28,7 @@ service.interceptors.request.use(config => {
 		window.location.reload();
   }
 
+	delete config.headers[PUBLIC_REQUEST_KEY];
   return config
 }, error => {
 	// Do something with request error here
@@ -44,14 +46,18 @@ service.interceptors.response.use( (response) => {
 	let notificationParam = {
 		message: ''
 	}
-	
+
 	// Remove token and redirect 
-	if (error.response.status === 400 || error.response.status === 403) {
+	if (error.response.status === 401 || error.response.status === 403) {
 		notificationParam.message = 'Authentication Fail'
 		notificationParam.description = 'Please login again'
 		localStorage.removeItem(AUTH_TOKEN)
 		history.push(ENTRY_ROUTE)
 		window.location.reload();
+	}
+
+	if (error.response.status === 400) {
+		notificationParam.message = 'Some inputs are invalid'
 	}
 
 	if (error.response.status === 404) {
