@@ -1,23 +1,12 @@
 import React, {Component} from 'react'
-import {Card, Table, Tag, message, DatePicker} from 'antd';
+import {Card, Table, Tag, message, DatePicker, Modal, Row, Col, Image, Button} from 'antd';
 import userData from "assets/data/user-list.data.json";
-
-const data = [];
-for (let i = 1; i <= 10; i++) {
-  data.push({
-    key: i,
-    date: new Date().toLocaleString(),
-    user: 'James Olsen',
-    amount: '$300',
-    description: 'Bought bitcoin',
-  });
-}
 
 const expandable = {expandedRowRender: record => <p>{record.description}</p>};
 const showHeader = true;
 const pagination = {position: 'bottom'};
 
-export class Transactions extends Component {
+export class GiftcardRequests extends Component {
   state = {
     users: userData,
     userProfileVisible: false,
@@ -34,7 +23,9 @@ export class Transactions extends Component {
     hasData: true,
     tableLayout: undefined,
     showDetails: false,
-    selectedRowKeys: []
+    selectedRowKeys: [],
+    openModal: false,
+    selectedData: {}
   }
 
   handleToggle = prop => enable => {
@@ -43,6 +34,10 @@ export class Transactions extends Component {
 
   handleSizeChange = e => {
     this.setState({size: e.target.value});
+  };
+
+  handleTableLayoutChange = e => {
+    this.setState({tableLayout: e.target.value});
   };
 
   handleExpandChange = enable => {
@@ -167,6 +162,18 @@ export class Transactions extends Component {
       },
     ];
 
+    const data = [];
+    for (let i = 1; i <= 10; i++) {
+      data.push({
+        key: i,
+        date: new Date().toLocaleString(),
+        user: 'James Olsen',
+        amount: '$300',
+        ref: '12eadsdwq1',
+        description: 'Bought bitcoin',
+      });
+    }
+
     return (
       <>
         <div style={{marginBottom: 32}}>
@@ -177,11 +184,65 @@ export class Transactions extends Component {
             {...this.state}
             columns={tableColumns}
             dataSource={this.state.hasData ? data : null}
+            onRow={(record) => ({
+              onClick: () => {
+                this.setState({
+                  openModal: true,
+                  selectedData: {...record},
+                })
+                console.log('amanda', record)
+              },
+            })}
           />
+          <Modal visible={this.state.openModal} onCancel={() => this.setState({
+            openModal: false,
+            selectedData: {}
+          })} title={'Transaction Details'} footer={false}>
+            <Row>
+              <Col>
+                <div style={{marginBottom: '24px'}}>
+                  <h5>User</h5>
+                  <span>{this.state.selectedData.user || ''}</span>
+                </div>
+                <div style={{marginBottom: '24px'}}>
+                  <h5>Reference No.</h5>
+                  <span>{this.state.selectedData.ref || ''}</span>
+                </div>
+                <div style={{marginBottom: '24px'}}>
+                  <h5>Date</h5>
+                  <span>{this.state.selectedData.date || ''}</span>
+                </div>
+                <div>
+                  <h5>Note</h5>
+                  <span>{this.state.selectedData.description || ''}</span>
+                </div>
+              </Col>
+            </Row>
+            <br/>
+            <br/>
+            <Row style={{justifyContent: 'space-between'}}>
+              <Image.PreviewGroup>
+                <Image src="https://upload.wikimedia.org/wikipedia/commons/4/44/OSH_gift_card.jpg" alt="giftcard"
+                       style={{width: '100px', height: '80px', borderRadius: 8}}/>
+                <Image src="https://upload.wikimedia.org/wikipedia/commons/4/44/OSH_gift_card.jpg" alt="giftcard"
+                       style={{width: '100px', height: '80px', borderRadius: 8}}/>
+                <Image src="https://upload.wikimedia.org/wikipedia/commons/4/44/OSH_gift_card.jpg" alt="giftcard"
+                       style={{width: '100px', height: '80px', borderRadius: 8}}/>
+                <Image src="https://upload.wikimedia.org/wikipedia/commons/4/44/OSH_gift_card.jpg" alt="giftcard"
+                       style={{width: '100px', height: '80px', borderRadius: 8}}/>
+              </Image.PreviewGroup>
+            </Row>
+            <Row className={'mt-4'}>
+              <div style={{margin: 'auto'}}>
+                <Button type={'danger'} className={'mr-4'}>Reject</Button>
+                <Button type={'primary'}>Accept</Button>
+              </div>
+            </Row>
+          </Modal>
         </Card>
       </>
     )
   }
 }
 
-export default Transactions
+export default GiftcardRequests

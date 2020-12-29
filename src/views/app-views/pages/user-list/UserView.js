@@ -1,15 +1,10 @@
 import React, { Component } from 'react';
 import { Avatar, Drawer, Divider } from 'antd';
-import { 
-	MobileOutlined, 
-	MailOutlined, 
-	UserOutlined, 
-	CompassOutlined,
+import {
+	MobileOutlined,
+	MailOutlined,
+	UserOutlined,
 	CalendarOutlined,
-	FacebookOutlined,
-	InstagramOutlined,
-	TwitterOutlined,
-	GlobalOutlined
 } from '@ant-design/icons';
 
 export class UserView extends Component {
@@ -25,8 +20,8 @@ export class UserView extends Component {
 			>
 				<div className="text-center mt-3">
 					<Avatar size={80} src={data?.img} />
-					<h3 className="mt-2 mb-0">{data?.name}</h3>
-					<span className="text-muted">{data?.personalInfo.title}</span>
+					<h3 className="mt-2 mb-0">{`${data?.firstName} ${data?.lastName}`}</h3>
+					<span className="text-muted">{data?.email}</span>
 				</div>
 				<Divider dashed />
 				<div className="">
@@ -37,25 +32,25 @@ export class UserView extends Component {
 					</p>
 					<p>
 						<CalendarOutlined />
-						<span className="ml-3 text-dark">Born in {data?.personalInfo.birthday}</span>
+						<span className="ml-3 text-dark">Created on {data?.createdAt}</span>
 					</p>
 				</div>
 				<div className="mt-5">
 					<h6 className="text-muted text-uppercase mb-3">CONTACT</h6>
 					<p>
 						<MobileOutlined />
-						<span className="ml-3 text-dark">{data?.personalInfo.phoneNumber}</span>
+						<span className="ml-3 text-dark">{data?.phoneNumber}</span>
 					</p>
 					<p>
 						<MailOutlined />
 						<span className="ml-3 text-dark">{data?.email? data?.email: '-'}</span>
 					</p>
-					<p>
+					{/* <p>
 						<CompassOutlined />
 						<span className="ml-3 text-dark">{data?.personalInfo.location}</span>
-					</p>
+					</p> */}
 				</div>
-				<div className="mt-5">
+				{/* <div className="mt-5">
 					<h6 className="text-muted text-uppercase mb-3">Social profiles</h6>
 					<p>
 						<FacebookOutlined />
@@ -73,7 +68,7 @@ export class UserView extends Component {
 						<GlobalOutlined />
 						<a href="/#" className="ml-3 text-dark">{data?.personalInfo.site? data?.personalInfo.site : '-'}</a>
 					</p>
-				</div>
+				</div> */}
 			</Drawer>
 		)
 	}

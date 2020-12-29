@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
-import { LockOutlined, MailOutlined } from '@ant-design/icons';
+import { LockOutlined, MailOutlined, UserOutlined } from '@ant-design/icons';
 import { Button, Form, Input, Alert } from "antd";
 import { signUp, showAuthMessage, showLoading, hideAuthMessage } from 'redux/actions/Auth';
 import { useHistory } from "react-router-dom";
@@ -15,6 +15,12 @@ const rules = {
 		{ 
 			type: 'email',
 			message: 'Please enter a validate email!'
+		}
+	],
+	name: [
+		{ 
+			required: true,
+			message: 'Please input your names'
 		}
 	],
 	password: [
@@ -83,6 +89,22 @@ export const RegisterForm = (props) => {
 					hasFeedback
 				>
 					<Input prefix={<MailOutlined className="text-primary" />}/>
+				</Form.Item>
+				<Form.Item 
+					name="firstName" 
+					label="First Name" 
+					rules={rules.name}
+					hasFeedback
+				>
+					<Input prefix={<UserOutlined className="text-primary" />}/>
+				</Form.Item>
+				<Form.Item 
+					name="lastName" 
+					label="Last Name" 
+					rules={rules.name}
+					hasFeedback
+				>
+					<Input prefix={<UserOutlined className="text-primary" />}/>
 				</Form.Item>
 				<Form.Item 
 					name="password" 
