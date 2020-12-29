@@ -112,8 +112,6 @@ export class GiftcardRequests extends Component {
   }
 
   render() {
-    const {userProfileVisible, selectedUser} = this.state;
-
     const tableColumns = [
       {
         title: 'User',
@@ -157,6 +155,7 @@ export class GiftcardRequests extends Component {
         key: 'action',
         render: () => (
           <span>
+            {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
             <a style={{marginRight: 16}}>Delete</a>
           </span>
         ),

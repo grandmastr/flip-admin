@@ -1,14 +1,10 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
 import { Menu, Layout } from "antd";
-import { MenuFoldOutlined, MenuUnfoldOutlined, SearchOutlined } from '@ant-design/icons';
+import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
 import Logo from './Logo';
-import NavNotification from './NavNotification';
-import NavProfile from './NavProfile';
-import NavLanguage from './NavLanguage';
 import NavPanel from './NavPanel';
 import NavSearch  from './NavSearch';
-import SearchInput from './NavSearch/SearchInput.js'
 import { toggleCollapsedNav, onMobileNavToggle } from 'redux/actions/Theme';
 import { NAV_TYPE_TOP, SIDE_NAV_COLLAPSED_WIDTH, SIDE_NAV_WIDTH } from 'constants/ThemeConstant';
 import utils from 'utils'
@@ -18,10 +14,6 @@ const { Header } = Layout;
 export const HeaderNav = props => {
   const { navCollapsed, mobileNav, navType, headerNavColor, toggleCollapsedNav, onMobileNavToggle, isMobile } = props;
   const [searchActive, setSearchActive] = useState(false)
-
-  const onSearchActive = () => {
-    setSearchActive(true)
-  }
 
   const onSearchClose = () => {
     setSearchActive(false)

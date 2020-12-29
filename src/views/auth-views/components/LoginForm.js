@@ -1,10 +1,8 @@
 import React, { useEffect } from 'react';
 import { connect } from "react-redux";
-import { Button, Form, Input, Divider, Alert } from "antd";
+import { Button, Form, Input, Alert } from "antd";
 import { MailOutlined, LockOutlined } from '@ant-design/icons';
 import PropTypes from 'prop-types';
-import { GoogleSVG, FacebookSVG } from 'assets/svg/icon';
-import CustomIcon from 'components/util-components/CustomIcon'
 import {
 	signIn,
 	showLoading,
@@ -20,14 +18,10 @@ export const LoginForm = props => {
 	let history = useHistory();
 
 	const {
-		otherSignIn,
 		showForgetPassword,
 		hideAuthMessage,
 		onForgetPasswordClick,
 		showLoading,
-		signInWithGoogle,
-		signInWithFacebook,
-		extra,
 		signIn,
 		token,
 		loading,
@@ -46,16 +40,6 @@ export const LoginForm = props => {
 		showLoading()
 		signIn(values);
 	};
-
-	const onGoogleLogin = () => {
-		showLoading()
-		signInWithGoogle()
-	}
-
-	const onFacebookLogin = () => {
-		showLoading()
-		signInWithFacebook()
-	}
 
 	useEffect(() => {
 		if (token !== null && allowRedirect) {

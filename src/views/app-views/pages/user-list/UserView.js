@@ -1,15 +1,10 @@
 import React, { Component } from 'react';
 import { Avatar, Drawer, Divider } from 'antd';
-import { 
-	MobileOutlined, 
-	MailOutlined, 
-	UserOutlined, 
-	CompassOutlined,
+import {
+	MobileOutlined,
+	MailOutlined,
+	UserOutlined,
 	CalendarOutlined,
-	FacebookOutlined,
-	InstagramOutlined,
-	TwitterOutlined,
-	GlobalOutlined
 } from '@ant-design/icons';
 
 export class UserView extends Component {

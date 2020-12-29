@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from "react-redux";
-import {Card, Table, Tag, Tooltip, message, Button, DatePicker} from 'antd';
+import {Card, Table, Tooltip, message, Button, DatePicker} from 'antd';
 import {EyeOutlined, DeleteOutlined} from '@ant-design/icons';
 import moment from 'moment';
 import UserView from './UserView';

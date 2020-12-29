@@ -5,7 +5,6 @@ import {
 } from '../constants/Users';
 import {
   showErrorMessage,
-  hideErrorMessage,
   fetchUserSuccess,
   fetchUsersSuccess
 } from "../actions/Users";

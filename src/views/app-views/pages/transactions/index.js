@@ -45,10 +45,6 @@ export class Transactions extends Component {
     this.setState({size: e.target.value});
   };
 
-  handleTableLayoutChange = e => {
-    this.setState({tableLayout: e.target.value});
-  };
-
   handleExpandChange = enable => {
     this.setState({expandable: enable ? expandable : undefined});
   };
@@ -121,8 +117,6 @@ export class Transactions extends Component {
   }
 
   render() {
-    const {userProfileVisible, selectedUser} = this.state;
-
     const tableColumns = [
       {
         title: 'User',
@@ -166,6 +160,7 @@ export class Transactions extends Component {
         key: 'action',
         render: () => (
           <span>
+            {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
             <a style={{marginRight: 16}}>Delete</a>
           </span>
         ),

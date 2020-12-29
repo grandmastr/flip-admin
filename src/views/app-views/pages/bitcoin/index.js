@@ -1,5 +1,5 @@
 import * as React from 'react'
-import {Card, Row, Col, Modal, Switch, Input, Button} from 'antd'
+import {Card, Row, Col, Switch, Input, Button} from 'antd'
 
 /**
  * you can add other props that will be needed to make this work well
@@ -7,7 +7,9 @@ import {Card, Row, Col, Modal, Switch, Input, Button} from 'antd'
  **/
 
 const BitcoinDetails = () => {
+  // eslint-disable-next-line no-unused-vars
   const [enableBuying, setEnableBuying] = React.useState(false)
+  // eslint-disable-next-line no-unused-vars
   const [enableSelling, setEnableSelling] = React.useState(false)
 
   return (
