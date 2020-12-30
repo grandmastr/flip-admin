@@ -4,6 +4,7 @@ import {
   GiftOutlined,
   PullRequestOutlined,
   DollarCircleOutlined,
+  NodeCollapseOutlined,
 } from '@ant-design/icons';
 import {APP_PREFIX_PATH} from 'configs/AppConfig'
 
@@ -61,6 +62,23 @@ const extraNavTree = [
         path: `${APP_PREFIX_PATH}/pages/bitcoin/details`,
         title: 'Details',
         icon: DollarCircleOutlined,
+        breadcrumb: false,
+        submenu: []
+      },
+    ]
+  },
+  {
+    key: 'extra-withdrawals',
+    path: `${APP_PREFIX_PATH}/pages/withdrawals`,
+    title: 'Withdrawals',
+    icon: '',
+    breadcrumb: false,
+    submenu: [
+      {
+        key: 'extra-withdrawals-list',
+        path: `${APP_PREFIX_PATH}/pages/withdrawals`,
+        title: 'Withdrawal requests',
+        icon: NodeCollapseOutlined,
         breadcrumb: false,
         submenu: []
       },

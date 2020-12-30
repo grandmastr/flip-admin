@@ -19,6 +19,7 @@ const Pages = ({match}) => (
       <Route path={`${match.url}/giftcards/requests`}
              component={lazy(() => import(`views/app-views/pages/giftcards/requests`))}/>
       <Route path={`${match.url}/bitcoin/details`} component={lazy(() => import(`views/app-views/pages/bitcoin`))}/>
+      <Route path={`${match.url}/withdrawals`} component={lazy(() => import(`views/app-views/pages/withdrawals`))}/>
     </Switch>
   </Suspense>
 );
