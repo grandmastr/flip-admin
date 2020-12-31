@@ -1,74 +1,18 @@
 import React, {useState} from "react";
-import {Row, Col, Button, Card, Avatar, Dropdown, Table, Menu, Tag} from 'antd';
+import {Row, Col, Card, Avatar, Dropdown, Table, Menu, Tag} from 'antd';
 import StatisticWidget from 'components/shared-components/StatisticWidget';
-import ChartWidget from 'components/shared-components/ChartWidget';
-import AvatarStatus from 'components/shared-components/AvatarStatus';
-import GoalWidget from 'components/shared-components/GoalWidget';
 import {
-  VisitorChartData,
   AnnualStatisticData,
-  ActiveMembersData,
-  NewMembersData,
   RecentTransactionData
 } from './DefaultDashboardData';
-import ApexChart from "react-apexcharts";
-import {apexLineChartDefaultOption, COLOR_2} from 'constants/ChartConstant';
 import {
-  UserAddOutlined,
   FileExcelOutlined,
   PrinterOutlined,
-  PlusOutlined,
   EllipsisOutlined,
-  StopOutlined,
   ReloadOutlined
 } from '@ant-design/icons';
 import utils from 'utils';
-import exampleService from 'services/ExampleService'
 import {withRouter} from 'react-router-dom';
-
-const MembersChart = props => (
-  <ApexChart {...props}/>
-)
-
-const memberChartOption = {
-  ...apexLineChartDefaultOption,
-  ...{
-    chart: {
-      sparkline: {
-        enabled: true,
-      }
-    },
-    colors: [COLOR_2],
-  }
-}
-
-const pushRoute = () => {
-  console.log('execute')
-  exampleService.getPost().then(resp => {
-    console.log('resp', resp)
-  })
-}
-
-const newJoinMemberOption = (
-  <Menu>
-    <Menu.Item key="0">
-      <span>
-        <div className="d-flex align-items-center">
-          <PlusOutlined/>
-          <span className="ml-2">Add all</span>
-        </div>
-      </span>
-    </Menu.Item>
-    <Menu.Item key="1">
-      <span>
-        <div className="d-flex align-items-center">
-          <StopOutlined/>
-          <span className="ml-2">Disable all</span>
-        </div>
-      </span>
-    </Menu.Item>
-  </Menu>
-)
 
 const latestTransactionOption = (
   <Menu>
@@ -144,10 +88,7 @@ const tableColumns = [
 ];
 
 export const DefaultDashboard = () => {
-  const [visitorChartData] = useState(VisitorChartData);
   const [annualStatisticData] = useState(AnnualStatisticData);
-  const [activeMembersData] = useState(ActiveMembersData);
-  const [newMembersData] = useState(NewMembersData)
   const [recentTransactionData] = useState(RecentTransactionData)
 
   return (

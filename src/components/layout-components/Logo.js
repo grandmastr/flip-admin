@@ -1,6 +1,5 @@
 import React from 'react'
 import {SIDE_NAV_WIDTH, SIDE_NAV_COLLAPSED_WIDTH, NAV_TYPE_TOP} from 'constants/ThemeConstant';
-import {APP_NAME} from 'configs/AppConfig';
 import {connect} from "react-redux";
 import utils from 'utils';
 import {Grid} from 'antd';
@@ -9,7 +8,7 @@ const {useBreakpoint} = Grid;
 
 const getLogoWidthGutter = (props, isMobile) => {
   const {navCollapsed, navType} = props;
-  const isNavTop = navType === NAV_TYPE_TOP ? true : false
+  const isNavTop = navType === NAV_TYPE_TOP
   if (isMobile && !props.mobileLogo) {
     return 0
   }
@@ -23,20 +22,20 @@ const getLogoWidthGutter = (props, isMobile) => {
   }
 }
 
-const getLogo = (props) => {
-  const {navCollapsed, logoType} = props;
-  if (logoType === 'light') {
-    if (navCollapsed) {
-      return '/img/logo-sm-white.png'
-    }
-    return '/img/logo-white.png'
-  }
-
-  if (navCollapsed) {
-    return '/img/logo-sm.png'
-  }
-  return '/img/logo.png'
-}
+// const getLogo = (props) => {
+//   const {navCollapsed, logoType} = props;
+//   if (logoType === 'light') {
+//     if (navCollapsed) {
+//       return '/img/logo-sm-white.png'
+//     }
+//     return '/img/logo-white.png'
+//   }
+//
+//   if (navCollapsed) {
+//     return '/img/logo-sm.png'
+//   }
+//   return '/img/logo.png'
+// }
 
 const getLogoDisplay = (isMobile, mobileLogo) => {
   if (isMobile && !mobileLogo) {

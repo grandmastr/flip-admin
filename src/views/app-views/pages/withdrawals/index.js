@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {Card, Table, Tag, message, DatePicker, Modal, Row, Col, Image, Button} from 'antd';
+import {Card, Table, Tag, message, DatePicker, Modal, Row, Col, Button} from 'antd';
 import userData from "assets/data/user-list.data.json";
 
 const expandable = {expandedRowRender: record => <p>{record.description}</p>};
