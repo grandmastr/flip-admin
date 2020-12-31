@@ -14,7 +14,7 @@ const Giftcard = ({slug, name, title, imageSource}) => {
 
   return (
     <>
-      <Card title={title || 'Steam'} extra={<EditOutlined onClick={() => setVisible(true)}/>} style={{width: 300}}>
+      <Card title={title || 'Steam'} extra={<EditOutlined onClick={() => setVisible(true)}/>} style={{width: 200}}>
         <p>Current price - $100</p>
         <img src={imageSource || 'https://swifttradesng.netlify.app/static/media/steam.aa6ed68b.png'} alt="steam card"
              style={{width: '100%'}}/>
@@ -38,11 +38,22 @@ const Giftcard = ({slug, name, title, imageSource}) => {
           </label>
           <br/>
           <br/>
+          {/*You can loop through the currencies and set the rates from there*/}
+          <span style={{fontWeight: 'bold', fontSize: '1rem'}}>Currency: EUR</span>
+          <br/>
           <label style={{marginBottom: 12}}>
             <p>
-              New Price
+              NGN rate
             </p>
-            <Input placeholder={'$120'}/>
+            <Input placeholder={'NGN 100'}/>
+          </label>
+          <br/>
+          <br/>
+          <label style={{marginBottom: 12}}>
+            <p>
+              GHS rate
+            </p>
+            <Input placeholder={'GHS 100'}/>
           </label>
         </form>
       </Modal>
@@ -53,15 +64,15 @@ const Giftcard = ({slug, name, title, imageSource}) => {
 const GiftCards = () => {
   return <>
     <Row gutter={16}>
-      <Col span={8}>
+      <Col span={5}>
         <Giftcard imageSource={'https://swifttradesng.netlify.app/static/media/hulu.f5335b13.webp'}
                   title={'Hulu card'}/>
       </Col>
-      <Col span={8}>
+      <Col span={5}>
         <Giftcard title={'Steam card'}/>
 
       </Col>
-      <Col span={8}>
+      <Col span={5}>
         <Giftcard imageSource={'https://swifttradesng.netlify.app/static/media/itunes.b485b84e.webp'}
                   title={'iTunes card'}/>
       </Col>
