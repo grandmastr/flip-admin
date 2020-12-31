@@ -1,30 +1,31 @@
-import React, { useState } from "react";
-import { Row, Col, Button, Card, Avatar, Dropdown, Table, Menu, Tag } from 'antd';
+import React, {useState} from "react";
+import {Row, Col, Button, Card, Avatar, Dropdown, Table, Menu, Tag} from 'antd';
 import StatisticWidget from 'components/shared-components/StatisticWidget';
 import ChartWidget from 'components/shared-components/ChartWidget';
 import AvatarStatus from 'components/shared-components/AvatarStatus';
 import GoalWidget from 'components/shared-components/GoalWidget';
-import { 
-  VisitorChartData, 
-  AnnualStatisticData, 
-  ActiveMembersData, 
-  NewMembersData, 
-  RecentTransactionData 
+import {
+  VisitorChartData,
+  AnnualStatisticData,
+  ActiveMembersData,
+  NewMembersData,
+  RecentTransactionData
 } from './DefaultDashboardData';
 import ApexChart from "react-apexcharts";
-import { apexLineChartDefaultOption, COLOR_2 } from 'constants/ChartConstant';
-import { 
-  UserAddOutlined, 
-  FileExcelOutlined, 
-  PrinterOutlined, 
-  PlusOutlined, 
-  EllipsisOutlined, 
-  StopOutlined, 
-  ReloadOutlined 
+import {apexLineChartDefaultOption, COLOR_2} from 'constants/ChartConstant';
+import {
+  UserAddOutlined,
+  FileExcelOutlined,
+  PrinterOutlined,
+  PlusOutlined,
+  EllipsisOutlined,
+  StopOutlined,
+  ReloadOutlined
 } from '@ant-design/icons';
 import utils from 'utils';
 import exampleService from 'services/ExampleService'
 import {withRouter} from 'react-router-dom';
+
 const MembersChart = props => (
   <ApexChart {...props}/>
 )
@@ -53,7 +54,7 @@ const newJoinMemberOption = (
     <Menu.Item key="0">
       <span>
         <div className="d-flex align-items-center">
-          <PlusOutlined />
+          <PlusOutlined/>
           <span className="ml-2">Add all</span>
         </div>
       </span>
@@ -61,7 +62,7 @@ const newJoinMemberOption = (
     <Menu.Item key="1">
       <span>
         <div className="d-flex align-items-center">
-          <StopOutlined />
+          <StopOutlined/>
           <span className="ml-2">Disable all</span>
         </div>
       </span>
@@ -74,7 +75,7 @@ const latestTransactionOption = (
     <Menu.Item key="0">
       <span>
         <div className="d-flex align-items-center">
-          <ReloadOutlined />
+          <ReloadOutlined/>
           <span className="ml-2">Refresh</span>
         </div>
       </span>
@@ -82,7 +83,7 @@ const latestTransactionOption = (
     <Menu.Item key="1">
       <span>
         <div className="d-flex align-items-center">
-          <PrinterOutlined />
+          <PrinterOutlined/>
           <span className="ml-2">Print</span>
         </div>
       </span>
@@ -90,7 +91,7 @@ const latestTransactionOption = (
     <Menu.Item key="12">
       <span>
         <div className="d-flex align-items-center">
-          <FileExcelOutlined />
+          <FileExcelOutlined/>
           <span className="ml-2">Export</span>
         </div>
       </span>
@@ -101,7 +102,7 @@ const latestTransactionOption = (
 const cardDropdown = (menu) => (
   <Dropdown overlay={menu} trigger={['click']} placement="bottomRight">
     <a href="/#" className="text-gray font-size-lg" onClick={e => e.preventDefault()}>
-      <EllipsisOutlined />
+      <EllipsisOutlined/>
     </a>
   </Dropdown>
 )
@@ -135,7 +136,8 @@ const tableColumns = [
     key: 'status',
     render: (_, record) => (
       <div className="text-right">
-        <Tag className="mr-0" color={record.status === 'Approved' ? 'cyan' : record.status === 'Pending' ? 'blue' : 'volcano'}>{record.status}</Tag>
+        <Tag className="mr-0"
+             color={record.status === 'Approved' ? 'cyan' : record.status === 'Pending' ? 'blue' : 'volcano'}>{record.status}</Tag>
       </div>
     ),
   },
@@ -149,15 +151,15 @@ export const DefaultDashboard = () => {
   const [recentTransactionData] = useState(RecentTransactionData)
 
   return (
-    <>  
+    <>
       <Row gutter={16}>
-        <Col xs={24} sm={24} md={24} lg={18}>
+        <Col xs={24} sm={24} md={24} lg={24}>
           <Row gutter={16}>
             {
               annualStatisticData.map((elm, i) => (
                 <Col xs={24} sm={24} md={24} lg={24} xl={8} key={i}>
-                  <StatisticWidget 
-                    title={elm.title} 
+                  <StatisticWidget
+                    title={elm.title}
                     value={elm.value}
                     status={elm.status}
                     subtitle={elm.subtitle}
@@ -166,62 +168,16 @@ export const DefaultDashboard = () => {
               ))
             }
           </Row>
-          <Row gutter={16}>
-            <Col span={24}>
-              <ChartWidget 
-                title="Unique Visitors" 
-                series={visitorChartData.series} 
-                xAxis={visitorChartData.categories} 
-                height={400}
-              />
-            </Col>
-          </Row>
-        </Col>
-        <Col xs={24} sm={24} md={24} lg={6}>
-          <GoalWidget 
-            title="Monthly Target" 
-            value={87}
-            subtitle="You need abit more effort to hit monthly target"
-            extra={<Button type="primary" onClick={() => pushRoute()}>Learn More</Button>}
-          />
-          <StatisticWidget 
-            title={
-              <MembersChart 
-                options={memberChartOption}
-                series={activeMembersData}
-                height={145}
-              />
-            }
-            value='17,329'
-            status={3.7}
-            subtitle="Active members"
-          />
         </Col>
       </Row>
       <Row gutter={16}>
-        <Col xs={24} sm={24} md={24} lg={7}>
-          <Card title="New Join Member" extra={cardDropdown(newJoinMemberOption)}>
-            <div className="mt-3">
-              {
-                newMembersData.map((elm, i) => (
-                  <div key={i} className={`d-flex align-items-center justify-content-between mb-4`}>
-                    <AvatarStatus id={i} src={elm.img} name={elm.name} subTitle={elm.title} />
-                    <div>
-                      <Button icon={<UserAddOutlined />} type="default" size="small">Add</Button>
-                    </div>
-                  </div>
-                ))
-              }
-            </div>
-          </Card>
-        </Col>
-        <Col xs={24} sm={24} md={24} lg={17}>
+        <Col xs={24} sm={24} md={24} lg={24}>
           <Card title="Latest Transactions" extra={cardDropdown(latestTransactionOption)}>
-            <Table 
-              className="no-border-last" 
-              columns={tableColumns} 
-              dataSource={recentTransactionData} 
-              rowKey='id' 
+            <Table
+              className="no-border-last"
+              columns={tableColumns}
+              dataSource={recentTransactionData}
+              rowKey='id'
               pagination={false}
             />
           </Card>

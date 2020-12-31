@@ -5,15 +5,24 @@ import {
   PullRequestOutlined,
   DollarCircleOutlined,
   NodeCollapseOutlined,
+  UserOutlined,
 } from '@ant-design/icons';
 import {APP_PREFIX_PATH} from 'configs/AppConfig'
 
 const extraNavTree = [
   {
+    key: 'extra-dashboard',
+    path: `${APP_PREFIX_PATH}/pages/dashboard`,
+    title: 'Dashboard',
+    icon: DashboardOutlined,
+    breadcrumb: false,
+    submenu: []
+  },
+  {
     key: 'extra-users',
     path: `${APP_PREFIX_PATH}/pages/user-list`,
     title: 'Users',
-    icon: DashboardOutlined,
+    icon: UserOutlined,
     breadcrumb: false,
     submenu: []
   },
