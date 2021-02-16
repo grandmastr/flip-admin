@@ -52,7 +52,7 @@ export const RegisterForm = (props) => {
 	let history = useHistory();
 
 	const onSignUp = () => {
-    	form.validateFields().then(values => {
+    	form.validateFields().then(({confirm, ...values}) => {
 			showLoading()
 			signUp(values)
 		}).catch(info => {

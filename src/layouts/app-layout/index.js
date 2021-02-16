@@ -1,46 +1,65 @@
-import React from 'react';
-import { Layout, Grid } from 'antd';
-import { connect } from 'react-redux';
-import SideNav from 'components/layout-components/SideNav';
-import TopNav from 'components/layout-components/TopNav';
+import React, { useEffect } from 'react'
+import { Layout, Grid } from 'antd'
+import { useDispatch, useSelector } from 'react-redux'
+import SideNav from 'components/layout-components/SideNav'
+import TopNav from 'components/layout-components/TopNav'
 import MobileNav from 'components/layout-components/MobileNav'
-import HeaderNav from 'components/layout-components/HeaderNav';
-import PageHeader from 'components/layout-components/PageHeader';
-import Footer from 'components/layout-components/Footer';
-import AppViews from 'views/app-views';
-import navigationConfig from "configs/NavigationConfig";
-import { 
-  SIDE_NAV_WIDTH, 
+import HeaderNav from 'components/layout-components/HeaderNav'
+import PageHeader from 'components/layout-components/PageHeader'
+import Footer from 'components/layout-components/Footer'
+import AppViews from 'views/app-views'
+import navigationConfig from 'configs/NavigationConfig'
+import {
+  SIDE_NAV_WIDTH,
   SIDE_NAV_COLLAPSED_WIDTH,
   NAV_TYPE_SIDE,
-  NAV_TYPE_TOP
-} from 'constants/ThemeConstant';
-import utils from 'utils';
+  NAV_TYPE_TOP,
+} from 'constants/ThemeConstant'
+import utils from 'utils'
+import { handleGetDashboardData } from '../../redux/actions/Admin'
 
-const { Content } = Layout;
-const { useBreakpoint } = Grid;
+const { Content } = Layout
+const { useBreakpoint } = Grid
 
-export const AppLayout = ({ navCollapsed, navType, location }) => {
-  const currentRouteInfo = utils.getRouteInfo(navigationConfig, location.pathname)
-  const screens = utils.getBreakPoint(useBreakpoint());
+export const AppLayout = ({ location }) => {
+  const { navCollapsed, navType } = useSelector((state) => state.theme)
+  const dispatch = useDispatch()
+  const currentRouteInfo = utils.getRouteInfo(
+    navigationConfig,
+    location.pathname,
+  )
+  const screens = utils.getBreakPoint(useBreakpoint())
   const isMobile = !screens.includes('lg')
   const isNavSide = navType === NAV_TYPE_SIDE
   const isNavTop = navType === NAV_TYPE_TOP
   const getLayoutGutter = () => {
-    if(isNavTop || isMobile) {
+    if (isNavTop || isMobile) {
       return 0
     }
     return navCollapsed ? SIDE_NAV_COLLAPSED_WIDTH : SIDE_NAV_WIDTH
   }
+
+  useEffect(() => {
+    dispatch(handleGetDashboardData())
+  }, [dispatch])
+
   return (
     <Layout>
-      <HeaderNav isMobile={isMobile}/>
-      {(isNavTop && !isMobile) ? <TopNav routeInfo={currentRouteInfo}/> : null}
+      <HeaderNav isMobile={isMobile} />
+      {isNavTop && !isMobile ? <TopNav routeInfo={currentRouteInfo} /> : null}
       <Layout className="app-container">
-        {(isNavSide && !isMobile) ? <SideNav routeInfo={currentRouteInfo}/> : null }
-        <Layout className="app-layout" style={{paddingLeft: getLayoutGutter()}}>
+        {isNavSide && !isMobile ? (
+          <SideNav routeInfo={currentRouteInfo} />
+        ) : null}
+        <Layout
+          className="app-layout"
+          style={{ paddingLeft: getLayoutGutter() }}
+        >
           <div className={`app-content ${isNavTop ? 'layout-top-nav' : ''}`}>
-            <PageHeader display={currentRouteInfo?.breadcrumb} title={currentRouteInfo?.title} />
+            <PageHeader
+              display={currentRouteInfo?.breadcrumb}
+              title={currentRouteInfo?.title}
+            />
             <Content>
               <AppViews />
             </Content>
@@ -53,9 +72,4 @@ export const AppLayout = ({ navCollapsed, navType, location }) => {
   )
 }
 
-const mapStateToProps = ({ theme }) => {
-  const { navCollapsed, navType, locale } =  theme;
-  return { navCollapsed, navType, locale }
-};
-
-export default connect(mapStateToProps)(React.memo(AppLayout));
+export default React.memo(AppLayout)

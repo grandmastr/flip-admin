@@ -1,19 +1,32 @@
-import React, {useState} from "react";
-import {connect} from "react-redux";
-import {Menu, Layout} from "antd";
-import {MenuFoldOutlined, MenuUnfoldOutlined} from '@ant-design/icons';
-import Logo from './Logo';
-import NavPanel from './NavPanel';
-import NavSearch from './NavSearch';
-import NavProfile from "./NavProfile";
-import {toggleCollapsedNav, onMobileNavToggle} from 'redux/actions/Theme';
-import {NAV_TYPE_TOP, SIDE_NAV_COLLAPSED_WIDTH, SIDE_NAV_WIDTH} from 'constants/ThemeConstant';
+import React, { useState } from 'react'
+import { connect } from 'react-redux'
+import { Menu, Layout } from 'antd'
+import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons'
+import Logo from './Logo'
+import NavPanel from './NavPanel'
+import NavSearch from './NavSearch'
+import NavProfile from './NavProfile'
+import { toggleCollapsedNav, onMobileNavToggle } from 'redux/actions/Theme'
+import {
+  NAV_TYPE_TOP,
+  SIDE_NAV_COLLAPSED_WIDTH,
+  SIDE_NAV_WIDTH,
+} from 'constants/ThemeConstant'
 import utils from 'utils'
 
-const {Header} = Layout;
+const { Header } = Layout
 
-export const HeaderNav = props => {
-  const {navCollapsed, mobileNav, navType, headerNavColor, toggleCollapsedNav, onMobileNavToggle, isMobile} = props;
+export const HeaderNav = (props) => {
+  const {
+    navCollapsed,
+    mobileNav,
+    navType,
+    headerNavColor,
+    toggleCollapsedNav,
+    onMobileNavToggle,
+    isMobile,
+    adminData,
+  } = props
   const [searchActive, setSearchActive] = useState(false)
 
   const onSearchClose = () => {
@@ -41,23 +54,29 @@ export const HeaderNav = props => {
     }
   }
   return (
-    <Header className={`app-header ${mode}`} style={{backgroundColor: headerNavColor}}>
+    <Header
+      className={`app-header ${mode}`}
+      style={{ backgroundColor: headerNavColor }}
+    >
       <div className={`app-header-wrapper ${isNavTop ? 'layout-top-nav' : ''}`}>
-        <Logo logoType={mode}/>
-        <div className="nav" style={{width: `calc(100% - ${getNavWidth()})`}}>
+        <Logo logoType={mode} />
+        <div className="nav" style={{ width: `calc(100% - ${getNavWidth()})` }}>
           <div className="nav-left">
             <Menu mode="horizontal">
-              {
-                isNavTop && !isMobile ?
-                  null
-                  :
-                  <Menu.Item key="0" onClick={() => {
+              {isNavTop && !isMobile ? null : (
+                <Menu.Item
+                  key="0"
+                  onClick={() => {
                     onToggle()
-                  }}>
-                    {navCollapsed || isMobile ? <MenuUnfoldOutlined className="nav-icon"/> :
-                      <MenuFoldOutlined className="nav-icon"/>}
-                  </Menu.Item>
-              }
+                  }}
+                >
+                  {navCollapsed || isMobile ? (
+                    <MenuUnfoldOutlined className="nav-icon" />
+                  ) : (
+                    <MenuFoldOutlined className="nav-icon" />
+                  )}
+                </Menu.Item>
+              )}
               {/*{*/}
               {/*  isMobile ?*/}
               {/*  <Menu.Item key="1" onClick={() => {onSearchActive()}}>*/}
@@ -73,19 +92,24 @@ export const HeaderNav = props => {
           <div className="nav-right">
             {/*<NavNotification />*/}
             {/*<NavLanguage />*/}
-            <NavProfile/>
-            <NavPanel/>
+            <NavProfile
+              adminName={`${adminData.firstName} ${adminData.lastName}`}
+            />
+            <NavPanel />
           </div>
-          <NavSearch active={searchActive} close={onSearchClose}/>
+          <NavSearch active={searchActive} close={onSearchClose} />
         </div>
       </div>
     </Header>
   )
 }
 
-const mapStateToProps = ({theme}) => {
-  const {navCollapsed, navType, headerNavColor, mobileNav} = theme;
-  return {navCollapsed, navType, headerNavColor, mobileNav}
-};
+const mapStateToProps = ({ theme, admin: { adminData } }) => {
+  const { navCollapsed, navType, headerNavColor, mobileNav } = theme
+  return { navCollapsed, navType, headerNavColor, mobileNav, adminData }
+}
 
-export default connect(mapStateToProps, {toggleCollapsedNav, onMobileNavToggle})(HeaderNav);
+export default connect(mapStateToProps, {
+  toggleCollapsedNav,
+  onMobileNavToggle,
+})(HeaderNav)

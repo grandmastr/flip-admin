@@ -1,10 +1,11 @@
 import {
-	FETCH_USER_SUCCESS,
-	FETCH_USERS_SUCCESS,
-	SHOW_ERROR_MESSAGE,
-	HIDE_ERROR_MESSAGE,
-	SHOW_LOADING
-} from '../constants/Users';
+  FETCH_USER_SUCCESS,
+  FETCH_USERS_SUCCESS,
+  SHOW_ERROR_MESSAGE,
+  HIDE_ERROR_MESSAGE,
+  SHOW_LOADING,
+  INITIAL_USERS_DATA,
+} from '../constants/Users'
 
 const initState = {
   loading: false,
@@ -12,47 +13,49 @@ const initState = {
   showMessage: false,
   redirect: '',
   users: null,
-  user: null
+  user: null,
 }
 
 const users = (state = initState, action) => {
-	switch (action.type) {
-		case SHOW_ERROR_MESSAGE: 
-			return {
-				...state,
-				message: action.message,
-				showMessage: true,
-				loading: false
-			}
-		case HIDE_ERROR_MESSAGE: 
-			return {
-				...state,
-				message: '',
-				showMessage: false,
-			}
-		case FETCH_USERS_SUCCESS: {
-			return {
-				...state,
-				loading: false,
-				users: action.users
-			}
-		}
-		case FETCH_USER_SUCCESS: {
-			return {
-				...state,
-				loading: false,
-				user: action.user
-			}
-		}
-		case SHOW_LOADING: {
-			return {
-				...state,
-				loading: true
-			}
-		}
-		default:
-			return state;
-	}
+  switch (action.type) {
+    case INITIAL_USERS_DATA:
+      return {
+        ...state,
+        users: action.payload,
+      }
+    case SHOW_ERROR_MESSAGE:
+      return {
+        ...state,
+        message: action.message,
+        showMessage: true,
+        loading: false,
+      }
+    case HIDE_ERROR_MESSAGE:
+      return {
+        ...state,
+        message: '',
+        showMessage: false,
+      }
+    case FETCH_USERS_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        users: action.users,
+      }
+    case FETCH_USER_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        user: action.user,
+      }
+    case SHOW_LOADING:
+      return {
+        ...state,
+        loading: true,
+      }
+    default:
+      return state
+  }
 }
 
 export default users

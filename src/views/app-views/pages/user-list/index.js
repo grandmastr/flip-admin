@@ -1,145 +1,132 @@
-import React, {Component} from 'react'
-import {connect} from "react-redux";
-import {Card, Table, Tooltip, message, Button, DatePicker} from 'antd';
-import {EyeOutlined, DeleteOutlined} from '@ant-design/icons';
-import moment from 'moment';
-import UserView from './UserView';
-import AvatarStatus from 'components/shared-components/AvatarStatus';
+import React, { useEffect, useState, useMemo, useCallback } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { Card, Table, Tooltip, message, Button, DatePicker } from 'antd'
+import { EyeOutlined, DeleteOutlined } from '@ant-design/icons'
+import moment from 'moment'
+import UserView from './UserView'
+import AvatarStatus from 'components/shared-components/AvatarStatus'
 import {
   fetchUser,
   fetchUsers,
   showLoading,
   hideErrorMessage,
-} from 'redux/actions/Users';
-import userData from "assets/data/user-list.data.json";
+} from 'redux/actions/Users'
+import userData from 'assets/data/user-list.data.json'
 
-export class UserList extends Component {
-
-  state = {
-    users: userData,
+const UserList = () => {
+  const dispatch = useDispatch()
+  const { users } = useSelector((state) => state.users)
+  const [{ userProfileVisible, selectedUser }, setState] = useState({
     userProfileVisible: false,
-    selectedUser: null
-  }
+    selectedUser: null,
+  })
 
-  componentDidMount() {
-    console.log("Loading data");
-    const {showLoading, fetchUsers} = this.props;
-    showLoading();
-    fetchUsers();
-  }
+  useEffect(() => {
+    dispatch(showLoading())
+    dispatch(fetchUsers())
+  }, [dispatch])
 
-  deleteUser = userId => {
-    this.setState({
-      users: this.state.users.filter(item => item.id !== userId),
-    })
-    message.success({content: `Deleted user ${userId}`, duration: 2});
-  }
+  const deleteUser = useCallback((userId) => {
+    setState((s) => ({
+      ...s,
+      users: s.users.filter((item) => item.id !== userId),
+    }))
+    message.success({ content: `Deleted user ${userId}`, duration: 2 })
+  }, [])
 
-  showUserProfile = userInfo => {
-    this.setState({
+  const showUserProfile = useCallback((userInfo) => {
+    setState((s) => ({
+      ...s,
       userProfileVisible: true,
-      selectedUser: userInfo
-    });
-  };
+      selectedUser: userInfo,
+    }))
+  }, [])
 
-  closeUserProfile = () => {
-    this.setState({
+  const closeUserProfile = () => {
+    setState((s) => ({
+      ...s,
       userProfileVisible: false,
-      selectedUser: null
-    });
+      selectedUser: null,
+    }))
   }
 
-  render() {
-    const {userProfileVisible, selectedUser} = this.state;
-    const {users} = this.props;
-
-    const tableColumns = [
+  const tableColumns = useMemo(
+    () => [
       {
         title: 'User',
         dataIndex: 'email',
         render: (_, record) => (
           <div className="d-flex">
-            <AvatarStatus src={record.img} name={`${record.firstName} ${record.lastName}`} subTitle={record.email}/>
+            <AvatarStatus
+              src={record.img}
+              name={`${record.firstName} ${record.lastName}`}
+              subTitle={record.email}
+            />
           </div>
         ),
-        // sorter: {
-        // 	compare: (a, b) => {
-        // 		a = a.name.toLowerCase();
-        // 			b = b.name.toLowerCase();
-        // 		return a > b ? -1 : b > a ? 1 : 0;
-        // 	},
-        // },
       },
       {
         title: 'Role',
         dataIndex: 'type',
-        // sorter: {
-        // 	compare: (a, b) => a.role.length - b.role.length,
-        // },
       },
       {
         title: 'Created On',
         dataIndex: 'createdAt',
-        render: date => (
-          <span>{moment(date).format("Do MMM YYYY")} </span>
-        ),
-        // sorter: (a, b) => moment(a.lastOnline).unix() - moment(b.lastOnline).unix()
+        render: (date) => <span>{moment(date).format('Do MMM YYYY')} </span>,
       },
-      // {
-      // 	title: 'Status',
-      // 	dataIndex: 'status',
-      // 	render: status => (
-      // 		<Tag className ="text-capitalize" color={status === 'active'? 'cyan' : 'red'}>{status}</Tag>
-      // 	),
-      // 	sorter: {
-      // 		compare: (a, b) => a.status.length - b.status.length,
-      // 	},
-      // },
       {
         title: '',
         dataIndex: 'actions',
         render: (_, elm) => (
           <div className="text-right">
             <Tooltip title="View">
-              <Button type="primary" className="mr-2" icon={<EyeOutlined/>} onClick={() => {
-                this.showUserProfile(elm)
-              }} size="small"/>
+              <Button
+                type="primary"
+                className="mr-2"
+                icon={<EyeOutlined />}
+                onClick={() => {
+                  showUserProfile(elm)
+                }}
+                size="small"
+              />
             </Tooltip>
             <Tooltip title="Delete">
-              <Button danger icon={<DeleteOutlined/>} onClick={() => {
-                this.deleteUser(elm.id)
-              }} size="small"/>
+              <Button
+                danger
+                icon={<DeleteOutlined />}
+                onClick={() => {
+                  deleteUser(elm.id)
+                }}
+                size="small"
+              />
             </Tooltip>
           </div>
-        )
-      }
-    ];
-    return (
-      <>
-        <div style={{marginBottom: 32}}>
-          <DatePicker.RangePicker/>
-        </div>
-        <Card bodyStyle={{'padding': '0px'}}>
-          <Table columns={tableColumns} dataSource={users ? users.users : []} rowKey='id'/>
-          <UserView data={selectedUser} visible={userProfileVisible} close={() => {
-            this.closeUserProfile()
-          }}/>
-        </Card>
-      </>
-    )
-  }
+        ),
+      },
+    ],
+    [showUserProfile, deleteUser],
+  )
+  return (
+    <>
+      <div style={{ marginBottom: 32 }}>
+        <DatePicker.RangePicker />
+      </div>
+      <Card bodyStyle={{ padding: '0px' }}>
+        <Table
+          columns={tableColumns}
+          dataSource={users ? users : []}
+          rowKey="id"
+        />
+        <UserView
+          data={selectedUser}
+          visible={userProfileVisible}
+          close={() => {
+            closeUserProfile()
+          }}
+        />
+      </Card>
+    </>
+  )
 }
 
-const mapStateToProps = ({users: _users}) => {
-  const {users, user} = _users;
-  return {users, user}
-};
-
-const mapDispatchToProps = {
-  fetchUser,
-  fetchUsers,
-  showLoading,
-  hideErrorMessage,
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(React.memo(UserList));
+export default UserList

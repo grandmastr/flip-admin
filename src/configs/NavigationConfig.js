@@ -6,8 +6,8 @@ import {
   DollarCircleOutlined,
   NodeCollapseOutlined,
   UserOutlined,
-} from '@ant-design/icons';
-import {APP_PREFIX_PATH} from 'configs/AppConfig'
+} from '@ant-design/icons'
+import { APP_PREFIX_PATH } from 'configs/AppConfig'
 
 const extraNavTree = [
   {
@@ -16,7 +16,7 @@ const extraNavTree = [
     title: 'Dashboard',
     icon: DashboardOutlined,
     breadcrumb: false,
-    submenu: []
+    submenu: [],
   },
   {
     key: 'extra-users',
@@ -24,7 +24,7 @@ const extraNavTree = [
     title: 'Users',
     icon: UserOutlined,
     breadcrumb: false,
-    submenu: []
+    submenu: [],
   },
   {
     key: 'extra-transactions',
@@ -32,7 +32,7 @@ const extraNavTree = [
     title: 'Transactions',
     icon: LineChartOutlined,
     breadcrumb: false,
-    submenu: []
+    submenu: [],
   },
   {
     key: 'extra-giftcards',
@@ -47,17 +47,25 @@ const extraNavTree = [
         title: 'Details',
         icon: GiftOutlined,
         breadcrumb: false,
-        submenu: []
+        submenu: [],
       },
       {
         key: 'extra-giftcards-request',
         path: `${APP_PREFIX_PATH}/pages/giftcards/requests`,
-        title: 'Buy requests',
+        title: 'All Card Sales',
         icon: PullRequestOutlined,
         breadcrumb: false,
-        submenu: []
-      }
-    ]
+        submenu: [],
+      },
+      {
+        key: 'extra-giftcards-new',
+        path: `${APP_PREFIX_PATH}/pages/giftcards/new`,
+        title: 'New Card Sales',
+        icon: PullRequestOutlined,
+        breadcrumb: false,
+        submenu: [],
+      },
+    ],
   },
   {
     key: 'extra-bitcoin',
@@ -72,9 +80,9 @@ const extraNavTree = [
         title: 'Details',
         icon: DollarCircleOutlined,
         breadcrumb: false,
-        submenu: []
+        submenu: [],
       },
-    ]
+    ],
   },
   {
     key: 'extra-withdrawals',
@@ -85,18 +93,24 @@ const extraNavTree = [
     submenu: [
       {
         key: 'extra-withdrawals-list',
-        path: `${APP_PREFIX_PATH}/pages/withdrawals`,
+        path: `${APP_PREFIX_PATH}/pages/withdrawals/all`,
         title: 'Withdrawal requests',
         icon: NodeCollapseOutlined,
         breadcrumb: false,
-        submenu: []
+        submenu: [],
       },
-    ]
-  }
+      {
+        key: 'extra-withdrawals-new',
+        path: `${APP_PREFIX_PATH}/pages/withdrawals/new`,
+        title: 'New Withdrawal requests',
+        icon: NodeCollapseOutlined,
+        breadcrumb: false,
+        submenu: [],
+      },
+    ],
+  },
 ]
 
-const navigationConfig = [
-  ...extraNavTree,
-]
+const navigationConfig = [...extraNavTree]
 
-export default navigationConfig;
+export default navigationConfig
